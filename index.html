@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouvement Étudiant — ENSAPLV (Ensa Paris la Villette)</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        arch: {
+                            50: '#fff5f5',
+                            100: '#ffe3e3',
+                            200: '#ffc9c9',
+                            300: '#ffa8a8',
+                            400: '#ff8787',
+                            500: '#e03131',
+                            600: '#c92a2a',
+                            700: '#b02a2a',
+                            800: '#8B0000',
+                            900: '#5c0000',
+                            950: '#380000',
+                            accent: '#8B0000'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        modalScale: {
+                            '0%': { opacity: '0', transform: 'scale(0.95) translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' }
+                        }
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.25s ease-out forwards',
+                        modalScale: 'modalScale 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff5f5;
+            color: #380000;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+
+        /* Subtle architectural grid pattern background */
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(139, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(139, 0, 0, 0.05) 1px, transparent 1px);
+        }
+
+        /* Scrollbar styling */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-arch-50 text-arch-950 antialiased flex flex-col min-h-screen selection:bg-arch-800 selection:text-white">
+
+    <!-- BANDEAU D'APPEL À CONTRIBUTION ET FORMULAIRES -->
+    <aside class="bg-arch-950 text-arch-100 text-xs py-3 px-4 font-mono-custom border-b border-arch-800 tracking-tight">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-2.5">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="truncate">ENSAPLV (Ensa Paris la Villette) &bull; Plateforme d'information & mobilisation étudiante</span>
+            </div>
+            <div class="flex items-center gap-4 text-[11px]">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSed-7lf5afWYfmdNr9PMfRmfokLucx0hF625SNGCJwk7BV9MQ/viewform?usp=header" target="_blank" rel="noopener" class="inline-flex items-center gap-1 hover:text-arch-300 transition-colors">
+                    <i data-feather="file-text" class="w-3 h-3 text-arch-300"></i>
+                    <span class="underline underline-offset-2">Proposer un article</span>
+                </a>
+                <span class="text-arch-700">|</span>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeBMGepThog4M7tMHap5j3Pqy7ctyLN1D9SGwnRjpBOSNok9Q/viewform?usp=header" target="_blank" rel="noopener" class="inline-flex items-center gap-1 hover:text-arch-300 transition-colors">
+                    <i data-feather="calendar" class="w-3 h-3 text-emerald-400"></i>
+                    <span class="underline underline-offset-2">Ajouter un évènement</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NAVIGATION PRINCIPALE -->
+    <header class="sticky top-0 z-40 bg-arch-50/90 backdrop-blur-md border-b border-arch-200/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 h-20 flex justify-between items-center">
+            
+            <!-- Logo & Brand -->
+            <a href="#" class="group flex items-center gap-3 focus:outline-none">
+                <img src="https://scontent-cdg4-2.cdninstagram.com/v/t51.82787-19/856966841_18114114172896342_202866261014858164_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy43NzMuQzIifQ%3D%3D&_nc_ohc=HWR-9aVHxgIQ7kNvwEskmeb&_nc_oc=AdqQxIRH31iBLSgFBRU41TbEEEA_AIf6-PIFD3683h8n9ljJ781SpwzkDy1lNSPCncG0zxiEAFidx5g6yezX1__W&_nc_zt=24&_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_gid=hE-Sq_k9F15HmL6ypE96KQ&_nc_ss=7b689&oh=00_AQMXjWOvaOC_1HZM27e2mryy0vZDXWvQLCJ3RlRoNICTXg&oe=6ADC488C" alt="Logo ENSAPLV" class="w-10 h-10 rounded-full object-cover border border-arch-300 shadow-sm">
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3.5 h-3.5 bg-arch-800 inline-block group-hover:rotate-45 transition-transform duration-300"></span>
+                        <span class="font-bold text-base sm:text-lg tracking-widest uppercase font-mono-custom text-arch-950">ENSAPLV &bull; MOB</span>
+                    </div>
+                    <span class="text-[11px] text-arch-600 font-mono-custom tracking-tight ml-5.5">Ensa Paris la Villette</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-xs font-mono-custom uppercase tracking-wider font-medium text-arch-700">
+                <a href="#accueil" class="hover:text-arch-800 transition-colors py-2">Accueil</a>
+                <a href="#agenda" class="hover:text-arch-800 transition-colors py-2">Agenda</a>
+                <a href="#galerie" class="hover:text-arch-800 transition-colors py-2">Travaux</a>
+                <a href="#actualites" class="hover:text-arch-800 transition-colors py-2">Actualités</a>
+                <a href="#contact" class="hover:text-arch-800 transition-colors py-2">Contact</a>
+            </nav>
+
+            <!-- Quick Action / Menu Mobile Trigger -->
+            <div class="flex items-center gap-3">
+                <a href="#proposer" class="hidden sm:inline-flex items-center justify-center h-10 px-4 text-xs font-mono-custom uppercase tracking-wider border border-arch-800 bg-arch-800 text-white hover:bg-arch-900 transition-all font-medium">
+                    + Soumettre
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="open-menu-btn" class="md:hidden p-2 text-arch-950 hover:bg-arch-100 transition-colors flex items-center justify-center min-w-[44px] min-h-[44px]" aria-label="Ouvrir le menu">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- DRAWER MOBILE -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-arch-950/40 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <aside id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-arch-50 z-50 shadow-2xl border-l border-arch-200 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out">
+        <div class="p-6 border-b border-arch-200 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 bg-arch-800 inline-block"></span>
+                <span class="font-bold text-sm tracking-widest uppercase font-mono-custom">Navigation ENSAPLV</span>
+            </div>
+            <button id="close-menu-btn" class="p-2 text-arch-700 hover:text-arch-800 hover:bg-arch-200/50 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Fermer le menu">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <nav class="p-6 flex flex-col gap-5 text-sm font-mono-custom uppercase tracking-wider font-semibold text-arch-800">
+            <a href="#accueil" class="mobile-nav-link flex items-center justify-between py-2.5 border-b border-arch-200/60 hover:text-arch-800">
+                <span>01. Accueil</span>
+                <i data-feather="chevron-right" class="w-4 h-4 text-arch-400"></i>
+            </a>
+            <a href="#agenda" class="mobile-nav-link flex items-center justify-between py-2.5 border-b border-arch-200/60 hover:text-arch-800">
+                <span>02. Agenda</span>
+                <i data-feather="chevron-right" class="w-4 h-4 text-arch-400"></i>
+            </a>
+            <a href="#galerie" class="mobile-nav-link flex items-center justify-between py-2.5 border-b border-arch-200/60 hover:text-arch-800">
+                <span>03. Travaux & Padlet</span>
+                <i data-feather="chevron-right" class="w-4 h-4 text-arch-400"></i>
+            </a>
+            <a href="#actualites" class="mobile-nav-link flex items-center justify-between py-2.5 border-b border-arch-200/60 hover:text-arch-800">
+                <span>04. Actualités</span>
+                <i data-feather="chevron-right" class="w-4 h-4 text-arch-400"></i>
+            </a>
+            <a href="#contact" class="mobile-nav-link flex items-center justify-between py-2.5 border-b border-arch-200/60 hover:text-arch-800">
+                <span>05. Mentions & Contact</span>
+                <i data-feather="chevron-right" class="w-4 h-4 text-arch-400"></i>
+            </a>
+        </nav>
+
+        <div class="p-6 border-t border-arch-200 bg-arch-100/50 space-y-3">
+            <a href="#proposer" class="mobile-nav-link flex items-center justify-center gap-2 w-full py-3 bg-arch-800 text-white font-mono-custom text-xs uppercase tracking-wider font-medium hover:bg-arch-900 transition-colors">
+                <i data-feather="plus-circle" class="w-4 h-4"></i>
+                <span>Soumettre un contenu</span>
+            </a>
+            <p class="text-[11px] font-mono-custom text-arch-600 text-center">ENSAPLV Mobilisation &bull; Direct Google Sheets</p>
+        </div>
+    </aside>
+
+    <!-- BARRE DE RECHERCHE GLOBALE & STATUT DATA -->
+    <div class="bg-arch-100/80 border-b border-arch-200 py-3.5 px-4 sm:px-6 lg:px-12 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-3 items-center justify-between">
+            <div class="relative w-full md:w-96">
+                <i data-feather="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-arch-500"></i>
+                <input type="text" id="global-search" placeholder="Rechercher mot-clé, lieu, intervenant, sujet..." 
+                    class="w-full pl-10 pr-4 py-2 bg-white border border-arch-200 text-xs font-mono-custom text-arch-900 placeholder-arch-400 focus:outline-none focus:border-arch-800 transition-colors min-h-[40px]">
+            </div>
+
+            <div class="w-full md:w-auto flex items-center justify-between md:justify-end gap-4 text-xs font-mono-custom text-arch-600">
+                <span id="data-count-badge" class="hidden sm:inline-block text-[11px]">Chargement des données...</span>
+                <div class="flex items-center gap-2 bg-white px-3 py-1.5 border border-arch-200 shadow-sm text-[11px]">
+                    <span id="status-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    <span id="status-text" class="font-semibold text-arch-900 uppercase tracking-wider">Connexion Sheet...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+
+        <!-- HERO SECTION -->
+        <section id="accueil" class="py-16 sm:py-24 lg:py-28 border-b border-arch-200 relative overflow-hidden">
+            <!-- Image d'arrière-plan avec flou réduit et dégradé -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://v1.padlet.pics/3/image.webp?t=c_limit%2Cdpr_1%2Ch_956%2Cw_956&url=https%3A%2F%2Fu1.padletusercontent.com%2Fuploads%2Fpadlet-uploads-usc1%2F6512625116%2F589d49420db157b36ffe1d47e4a1eb70%2FWhatsApp_Image_2026_10_19_at_21_39_37.jpeg%3Fexpiry_token%3D5WaHZRdGG3LkUVQGy3SZ-zdRtq89aJeottSBaF_Hii8dmxJqYDvE2-MDbblcM-ZrVekXW99RReKkJFIoMoKio2kXPES0CTmTGY8P7SnUib82RFi7gQ3AcO6aClBcNyBzKtnEsggfp68nhVyoZIs-DpBRXvZO84ewRzzAU34wq0m9jsuOUGZ5faQKgdWuDe4KsvTOUoaPUprdONrl8lRw2MmsImnMlYrPF1kZUln1qLtb0qTvV-3d4SKshjXMIg7-" alt="Mobilisation ENSAPLV" class="w-full h-full object-cover blur-[2px] scale-105 opacity-90">
+                <div class="absolute inset-0 bg-gradient-to-b from-arch-50/70 via-arch-50/85 to-arch-50"></div>
+                <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+                <div class="max-w-4xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-arch-200/80 backdrop-blur-md border border-arch-300 font-mono-custom text-xs uppercase tracking-widest text-arch-700 mb-6 shadow-sm">
+                        <span class="w-1.5 h-1.5 bg-arch-800"></span>
+                        <span>ENSAPLV &bull; Espace d'information autogéré</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-arch-950 leading-[1.12] mb-6">
+                        La mobilisation à l'ENSA Paris la Villette.
+                    </h1>
+                    <p class="text-base sm:text-xl text-arch-800 font-medium leading-relaxed max-w-2xl mb-10">
+                        Consultez les communiqués du mouvement, l'agenda chronologique détaillé, le Padlet officiel des revendications et la galerie des travaux étudiants de l'ENSAPLV.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#agenda" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-arch-800 text-white font-mono-custom text-xs uppercase tracking-wider font-semibold hover:bg-arch-900 transition-all shadow-md min-h-[48px]">
+                            <span>Consulter l'Agenda</span>
+                            <i data-feather="calendar" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#actualites" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/90 backdrop-blur-sm border border-arch-300 text-arch-950 font-mono-custom text-xs uppercase tracking-wider font-semibold hover:bg-arch-100 transition-all min-h-[48px]">
+                            <span>Les Actualités</span>
+                            <i data-feather="arrow-down" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 : AGENDA CHRONOLOGIQUE (PLACÉ EN PREMIER) -->
+        <section id="agenda" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 border-b border-arch-200">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                <div>
+                    <span class="font-mono-custom text-xs text-arch-600 uppercase tracking-widest block mb-2">// 01. Emploi du Temps Chronologique</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-arch-950 uppercase font-mono-custom">Agenda des Événements ENSAPLV</h2>
+                </div>
+
+                <div id="agenda-types" class="flex items-center gap-2 overflow-x-auto pb-2 pt-1 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <button class="agenda-filter-btn active-filter px-4 py-2 border border-arch-800 bg-arch-800 text-white font-mono-custom text-xs uppercase tracking-wider shrink-0 transition-all min-h-[40px]" data-type="all">
+                        Tous
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barre de recherche spécifique Agenda -->
+            <div class="mb-8 relative max-w-md">
+                <i data-feather="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-arch-500"></i>
+                <input type="text" id="agenda-search" placeholder="Rechercher un événement, une salle, un intervenant..." 
+                    class="w-full pl-10 pr-4 py-2 bg-white border border-arch-200 text-xs font-mono-custom text-arch-900 placeholder-arch-400 focus:outline-none focus:border-arch-800 transition-colors min-h-[40px]">
+            </div>
+
+            <!-- Liste Agenda Séparée par Jours -->
+            <div id="agenda-container" class="space-y-6">
+                <!-- Skeleton Loader -->
+                <div class="p-6 bg-white border border-arch-200 animate-pulse space-y-3">
+                    <div class="h-4 bg-arch-200 w-1/4"></div>
+                    <div class="h-6 bg-arch-200 w-1/2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 : GALERIE & PADLET OFFICIEL -->
+        <section id="galerie" class="py-16 sm:py-24 bg-arch-950 text-arch-100 border-b border-arch-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+                    <div>
+                        <span class="font-mono-custom text-xs text-arch-300 uppercase tracking-widest block mb-2">// 02. Production Visuelle & Lettres Ouvertes</span>
+                        <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase font-mono-custom">Galerie ENSAPLV & Padlet</h2>
+                    </div>
+                    <p class="text-xs font-mono-custom text-arch-300 max-w-xs">
+                        Intégration du Padlet officiel des revendications et de l'ensemble des visuels et travaux étudiants.
+                    </p>
+                </div>
+
+                <!-- CONTENEUR PADLET -->
+                <div class="mb-12 bg-arch-900 border border-arch-800 p-2 sm:p-4 rounded-lg shadow-xl">
+                    <div class="flex items-center justify-between px-3 py-2 mb-2 border-b border-arch-800 text-xs font-mono-custom text-arch-300">
+                        <span class="flex items-center gap-2">
+                            <i data-feather="external-link" class="w-4 h-4 text-arch-300"></i>
+                            <span>Padlet Officiel : Lettres et Revendications ENSAPLV</span>
+                        </span>
+                        <a href="https://padlet.com/ensaplvenlutte26/lettres-et-revendications-s024njj73un4vt7uxhb4" target="_blank" rel="noopener" class="underline hover:text-white transition-colors">Ouvrir dans un nouvel onglet</a>
+                    </div>
+                    <div class="w-full h-[600px] overflow-hidden rounded relative bg-arch-950">
+                        <iframe src="https://padlet.com/ensaplvenlutte26/lettres-et-revendications-s024njj73un4vt7uxhb4" frameborder="0" allow="camera;microphone;geolocation" class="w-full h-full"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 1 : ACTUALITÉS (PLACÉ EN DERNIER) -->
+        <section id="actualites" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 border-b border-arch-200">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                <div>
+                    <span class="font-mono-custom text-xs text-arch-600 uppercase tracking-widest block mb-2">// 03. Fil d'information</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-arch-950 uppercase font-mono-custom">Actualités & Projets</h2>
+                </div>
+                
+                <div id="actu-categories" class="flex items-center gap-2 overflow-x-auto pb-2 pt-1 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <button class="actu-filter-btn active-filter px-4 py-2 border border-arch-800 bg-arch-800 text-white font-mono-custom text-xs uppercase tracking-wider shrink-0 transition-all min-h-[40px]" data-category="all">
+                        Toutes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barre de recherche spécifique Actualités -->
+            <div class="mb-8 relative max-w-md">
+                <i data-feather="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-arch-500"></i>
+                <input type="text" id="actu-search" placeholder="Filtrer les actualités ENSAPLV..." 
+                    class="w-full pl-10 pr-4 py-2 bg-white border border-arch-200 text-xs font-mono-custom text-arch-900 placeholder-arch-400 focus:outline-none focus:border-arch-800 transition-colors min-h-[40px]">
+            </div>
+
+            <!-- Grille d'actualités -->
+            <div id="actualites-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Skeleton Loader -->
+                <div class="p-8 bg-white border border-arch-200 animate-pulse space-y-4">
+                    <div class="h-4 bg-arch-200 w-1/3"></div>
+                    <div class="h-6 bg-arch-200 w-3/4"></div>
+                    <div class="h-24 bg-arch-100 w-full"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 : PARTICIPER ET SOUMETTRE -->
+        <section id="proposer" class="py-16 sm:py-24 bg-arch-100 border-b border-arch-200">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                <span class="font-mono-custom text-xs text-arch-800 font-bold uppercase tracking-widest block mb-3">// Formulaires Officiels ENSAPLV</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-arch-950 mb-6">Proposer un contenu ou une date</h2>
+                <p class="text-sm sm:text-base text-arch-700 leading-relaxed max-w-2xl mx-auto mb-10">
+                    Chaque publication soumise est transmise directement au registre collectif de l'ENSAPLV. Une fois validée par la modération, elle apparaît immédiatement sur le site.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-stretch">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSed-7lf5afWYfmdNr9PMfRmfokLucx0hF625SNGCJwk7BV9MQ/viewform?usp=header" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-arch-800 text-white font-mono-custom text-xs uppercase tracking-wider font-semibold hover:bg-arch-900 transition-all shadow-md min-h-[48px]">
+                        <i data-feather="file-text" class="w-4 h-4"></i>
+                        <span>Formulaire Article / Projet</span>
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeBMGepThog4M7tMHap5j3Pqy7ctyLN1D9SGwnRjpBOSNok9Q/viewform?usp=header" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white border border-arch-300 text-arch-950 font-mono-custom text-xs uppercase tracking-wider font-semibold hover:bg-arch-200 transition-all min-h-[48px]">
+                        <i data-feather="calendar" class="w-4 h-4"></i>
+                        <span>Formulaire Agenda</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5 : REJOINDRE & MENTIONS LÉGALES -->
+        <section id="contact" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
+                <div>
+                    <span class="font-mono-custom text-xs text-arch-600 uppercase tracking-widest block mb-2">// Organisation Étudiante ENSAPLV</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold uppercase font-mono-custom text-arch-950 mb-6">Fonctionnement du Collectif</h2>
+                    <p class="text-arch-700 text-sm sm:text-base leading-relaxed mb-8">
+                        Ce site rassemble l'actualité du mouvement de l'école en soutien aux lycéens et contre le manque de moyens. Les Assemblées Générales et réunions sont ouvertes à l'ensemble des étudiantes et étudiants.
+                    </p>
+                    
+                    <div class="space-y-3 font-mono-custom text-xs text-arch-800">
+                        <div class="p-4 bg-white border border-arch-200 flex items-center gap-3">
+                            <i data-feather="map-pin" class="w-4 h-4 text-arch-600 shrink-0"></i>
+                            <span>Établissement : ENSAPLV — 144 Avenue de Flandre, 75019 Paris</span>
+                        </div>
+                        <div class="p-4 bg-white border border-arch-200 flex items-center gap-3">
+                            <i data-feather="shield" class="w-4 h-4 text-arch-600 shrink-0"></i>
+                            <span>Modération : Les demandes d'ajout d'actualité et d'agenda sont ouvertes à tous mais n'apparaissent sur le site qu'après avoir été contrôlées et vérifiées par le pôle communication.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 bg-arch-100 border border-arch-200 space-y-4">
+                    <h3 class="font-bold font-mono-custom text-sm uppercase text-arch-950">Mentions Légales & Hébergement</h3>
+                    <p class="text-xs text-arch-700 leading-relaxed">
+                        Plateforme d'information étudiante indépendante autogérée de l'ENSAPLV. Application connectée en temps réel via OpenSheet aux registres publics de mobilisation.
+                    </p>
+                    <div class="pt-3 border-t border-arch-200 text-[11px] font-mono-custom text-arch-600 space-y-1">
+                        <p>Structure : Mouvement Étudiant ENSAPLV</p>
+                        <p>Publication : Données vérifiées sous contrôle des contributeurs</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODALE INTERACTIVE UNIFIÉE -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-arch-950/80 backdrop-blur-sm hidden items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fadeIn">
+        <div class="relative bg-white border border-arch-300 w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl animate-modalScale my-auto">
+            
+            <!-- Modal Header -->
+            <div class="p-5 sm:p-6 border-b border-arch-200 flex items-start justify-between bg-arch-50 gap-4">
+                <div>
+                    <div id="modal-badge-group" class="flex flex-wrap items-center gap-2 mb-2">
+                        <span id="modal-category" class="px-2.5 py-0.5 bg-arch-800 text-white font-mono-custom text-[10px] uppercase font-bold tracking-wider"></span>
+                        <span id="modal-date" class="font-mono-custom text-xs text-arch-600"></span>
+                    </div>
+                    <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-arch-950 leading-tight"></h3>
+                </div>
+                <button id="close-modal-btn" class="p-2 text-arch-600 hover:text-arch-950 hover:bg-arch-200/50 rounded transition-colors shrink-0" aria-label="Fermer la fenêtre">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-5 sm:p-8 overflow-y-auto space-y-6 text-arch-900 text-sm sm:text-base leading-relaxed">
+                <!-- Image Optionnelle -->
+                <div id="modal-image-container" class="hidden overflow-hidden border border-arch-200 bg-arch-100 max-h-[50vh]">
+                    <img id="modal-image" src="" alt="" class="w-full h-full object-contain mx-auto">
+                </div>
+
+                <!-- Meta Infos -->
+                <div id="modal-meta-box" class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-arch-50 border border-arch-200 font-mono-custom text-xs">
+                    <div id="modal-meta-location" class="hidden items-center gap-2 text-arch-800">
+                        <i data-feather="map-pin" class="w-4 h-4 text-arch-600 shrink-0"></i>
+                        <span id="modal-location-text"></span>
+                    </div>
+                    <div id="modal-meta-author" class="hidden items-center gap-2 text-arch-800">
+                        <i data-feather="user" class="w-4 h-4 text-arch-600 shrink-0"></i>
+                        <span id="modal-author-text"></span>
+                    </div>
+                </div>
+
+                <!-- Main Text -->
+                <div id="modal-description" class="whitespace-pre-line text-arch-800 space-y-4"></div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 sm:p-5 border-t border-arch-200 bg-arch-50 flex justify-between items-center text-xs font-mono-custom text-arch-600">
+                <span>ENSAPLV Mobilisation</span>
+                <button id="close-modal-footer-btn" class="px-5 py-2.5 bg-arch-800 text-white font-mono-custom uppercase tracking-wider font-semibold hover:bg-arch-900 transition-colors">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-arch-950 text-white border-t border-arch-800 py-12 font-mono-custom text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-arch-800">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 bg-white inline-block"></span>
+                        <span class="font-bold tracking-wider">ENSAPLV MOBILISATION</span>
+                    </div>
+                    <p class="text-arch-300">
+                        École Nationale Supérieure d'Architecture de Paris la Villette &bull; Plateforme ouverte
+                    </p>
+                </div>
+                
+                <div class="space-y-2">
+                    <p class="font-bold text-white uppercase tracking-wider mb-2">Réseaux & Liens</p>
+                    <ul class="space-y-2 text-arch-300">
+                        <li><a href="https://www.instagram.com/lve_ensaplv?rpxt=MzFuZGx6b2h6Zms2" target="_blank" rel="noopener" class="hover:text-white transition-colors underline underline-offset-2">Lve insta</a></li>
+                        <li><a href="https://www.instagram.com/plvaction?xtok=eHV0ZnFlcTRyN2lr" target="_blank" rel="noopener" class="hover:text-white transition-colors underline underline-offset-2">Insta en plvlutte</a></li>
+                        <li><a href="https://www.tiktok.com/@ensaplv.en.lutte?_r=1&_t=ZN-9Agg3ohLmz8" target="_blank" rel="noopener" class="hover:text-white transition-colors underline underline-offset-2">Tiktok plv en lutte</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-bold text-white uppercase tracking-wider mb-2">Mobilisation</p>
+                    <ul class="space-y-2 text-arch-300">
+                        <li><a href="https://www.google.com/url?q=https%3A%2F%2Fchat.whatsapp.com%2FJbzf8YtEDKQ48VdSMIK9Xx&sa=D&sntz=1&usg=AOvVaw24d3lJSgUgBh0CCRoHHzb-" target="_blank" rel="noopener" class="hover:text-white transition-colors underline underline-offset-2">Groupes watsapp de la mob</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-arch-400 text-[11px]">
+                <p>&copy; 2026 Mouvement Étudiant ENSAPLV. Tous droits réservés.</p>
+                <a href="#accueil" class="hover:text-white transition-colors py-2 flex items-center gap-1">
+                    <span>Haut de page</span>
+                    <i data-feather="arrow-up" class="w-3 h-3"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+   <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // CONFIGURATION CONSTANTES OPENSHEET
+        const SHEET_ID = '1qKlPEpuNua8jHzWf3IGOot0NoPErjAnC60h5NctEA2Y';
+        const URL_ACTUALITES = `https://opensheet.elk.sh/${SHEET_ID}/Actualites`;
+        const URL_AGENDA = `https://opensheet.elk.sh/${SHEET_ID}/Agenda`;
+
+        // STATE MANAGEMENT
+        let rawActualites = [];
+        let rawAgenda = [];
+        let activeActuCategory = 'all';
+        let activeAgendaType = 'all';
+        let globalSearchQuery = '';
+        let actuSearchQuery = '';
+        let agendaSearchQuery = '';
+
+        // INITIALISATION
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+            initNavigationDrawer();
+            initModalEvents();
+            initSearchAndFilters();
+            loadData();
+        });
+
+        // 1. MENU TIROIR MOBILE
+        function initNavigationDrawer() {
+            const openBtn = document.getElementById('open-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('mobile-overlay');
+            const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+            function openDrawer() {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeDrawer() {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            openBtn?.addEventListener('click', openDrawer);
+            closeBtn?.addEventListener('click', closeDrawer);
+            overlay?.addEventListener('click', closeDrawer);
+            navLinks.forEach(link => link.addEventListener('click', closeDrawer));
+        }
+
+        // 2. GESTION DE LA MODALE
+        function initModalEvents() {
+            const modal = document.getElementById('detail-modal');
+            const closeBtn = document.getElementById('close-modal-btn');
+            const closeFooterBtn = document.getElementById('close-modal-footer-btn');
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
+            closeBtn?.addEventListener('click', closeModal);
+            closeFooterBtn?.addEventListener('click', closeModal);
+
+            modal?.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        }
+
+        function openDetailModal({ title, category, date, description, location, author, imageUrl }) {
+            const modal = document.getElementById('detail-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalCat = document.getElementById('modal-category');
+            const modalDate = document.getElementById('modal-date');
+            const modalDesc = document.getElementById('modal-description');
+            
+            const imgContainer = document.getElementById('modal-image-container');
+            const imgElement = document.getElementById('modal-image');
+            
+            const metaBox = document.getElementById('modal-meta-box');
+            const metaLoc = document.getElementById('modal-meta-location');
+            const locText = document.getElementById('modal-location-text');
+            const metaAuth = document.getElementById('modal-meta-author');
+            const authText = document.getElementById('modal-author-text');
+
+            modalTitle.textContent = title || 'Sans titre';
+            modalCat.textContent = category || 'Information';
+            modalDate.textContent = date || '';
+            modalDesc.textContent = description || 'Aucun détail supplémentaire disponible.';
+
+            if (imageUrl && imageUrl.trim() !== '') {
+                imgElement.src = imageUrl;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            let hasMeta = false;
+            if (location && location.trim() !== '') {
+                locText.textContent = `Lieu : ${location}`;
+                metaLoc.classList.remove('hidden');
+                metaLoc.classList.add('flex');
+                hasMeta = true;
+            } else {
+                metaLoc.classList.add('hidden');
+                metaLoc.classList.remove('flex');
+            }
+
+            if (author && author.trim() !== '') {
+                authText.textContent = `Auteur·e : ${author}`;
+                metaAuth.classList.remove('hidden');
+                metaAuth.classList.add('flex');
+                hasMeta = true;
+            } else {
+                metaAuth.classList.add('hidden');
+                metaAuth.classList.remove('flex');
+            }
+
+            if (hasMeta) {
+                metaBox.classList.remove('hidden');
+            } else {
+                metaBox.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            feather.replace();
+        }
+
+        // 3. RECHERCHES ET FILTRES MULTIPLES
+        function initSearchAndFilters() {
+            const globalSearchInput = document.getElementById('global-search');
+            globalSearchInput?.addEventListener('input', (e) => {
+                globalSearchQuery = e.target.value.toLowerCase().trim();
+                renderActualites();
+                renderAgenda();
+            });
+
+            const actuSearchInput = document.getElementById('actu-search');
+            actuSearchInput?.addEventListener('input', (e) => {
+                actuSearchQuery = e.target.value.toLowerCase().trim();
+                renderActualites();
+            });
+
+            const agendaSearchInput = document.getElementById('agenda-search');
+            agendaSearchInput?.addEventListener('input', (e) => {
+                agendaSearchQuery = e.target.value.toLowerCase().trim();
+                renderAgenda();
+            });
+        }
+
+        // 4. CHARGEMENT ET RÉCUPÉRATION OPENSHEET
+        async function loadData() {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            const countBadge = document.getElementById('data-count-badge');
+
+            try {
+                const [actuRes, agendaRes] = await Promise.all([
+                    fetch(URL_ACTUALITES),
+                    fetch(URL_AGENDA)
+                ]);
+
+                if (!actuRes.ok || !agendaRes.ok) {
+                    throw new Error("Erreur de réponse du serveur OpenSheet");
+                }
+
+                const actuData = await actuRes.json();
+                const agendaData = await agendaRes.json();
+
+                rawActualites = (Array.isArray(actuData) ? actuData : []).filter(item => 
+                    item.Statut && item.Statut.toString().trim().toLowerCase() === 'ok'
+                );
+
+                rawAgenda = (Array.isArray(agendaData) ? agendaData : []).filter(item => 
+                    item.Statut && item.Statut.toString().trim().toLowerCase() === 'ok'
+                );
+
+                // Tri chronologique de l'agenda
+                rawAgenda.sort((a, b) => {
+                    const dateA = parseDateTime(a["Date"], a["Heure de début"] || a["Heure"]);
+                    const dateB = parseDateTime(b["Date"], b["Heure de début"] || b["Heure"]);
+                    return dateA - dateB;
+                });
+
+                statusDot.className = "w-2 h-2 rounded-full bg-emerald-500";
+                statusText.textContent = "ENSAPLV Connecté";
+                countBadge.textContent = `${rawActualites.length} actu(s) • ${rawAgenda.length} événement(s)`;
+
+                // Forcer explicitement l'état initial sur 'all' avant de construire les filtres et d'afficher
+                activeActuCategory = 'all';
+                activeAgendaType = 'all';
+
+                setupCategoryFilters();
+                setupAgendaTypeFilters();
+
+                renderActualites();
+                renderAgenda();
+
+            } catch (error) {
+                console.error("Erreur de chargement OpenSheet:", error);
+                statusDot.className = "w-2 h-2 rounded-full bg-red-500";
+                statusText.textContent = "Erreur Connexion";
+                countBadge.textContent = "Vérifier la visibilité du Sheet";
+
+                document.getElementById('actualites-container').innerHTML = `
+                    <div class="col-span-full p-8 bg-red-50 border border-red-200 text-red-800 font-mono-custom text-xs">
+                        ⚠️ Impossible de charger les données. Vérifiez que la feuille Google Sheet est bien partagée.
+                    </div>
+                `;
+                document.getElementById('agenda-container').innerHTML = `
+                    <div class="p-8 bg-red-50 border border-red-200 text-red-800 font-mono-custom text-xs">
+                        ⚠️ Erreur lors du chargement de l'agenda.
+                    </div>
+                `;
+            }
+        }
+
+        // PARSER DE DATES MULTI-FORMATS AVEC JOUR DE LA SEMAINE
+        function parseDateTime(dateStr, timeStr) {
+            if (!dateStr) return new Date(2099, 11, 31);
+
+            let day = 1, month = 0, year = 2026;
+            const str = dateStr.trim();
+
+            if (str.includes('/')) {
+                const parts = str.split('/');
+                if (parts.length >= 3) {
+                    day = parseInt(parts[0], 10) || 1;
+                    month = (parseInt(parts[1], 10) || 1) - 1;
+                    year = parseInt(parts[2], 10) || 2026;
+                    if (year < 100) year += 2000;
+                }
+            } else if (str.includes('-')) {
+                const parts = str.split('-');
+                if (parts.length >= 3) {
+                    year = parseInt(parts[0], 10) || 2026;
+                    month = (parseInt(parts[1], 10) || 1) - 1;
+                    day = parseInt(parts[2], 10) || 1;
+                }
+            }
+
+            let hours = 0, minutes = 0;
+            if (timeStr && timeStr.trim() !== '') {
+                const tParts = timeStr.trim().replace('h', ':').replace('H', ':').split(':');
+                hours = parseInt(tParts[0], 10) || 0;
+                if (tParts.length > 1) minutes = parseInt(tParts[1], 10) || 0;
+            }
+
+            return new Date(year, month, day, hours, minutes);
+        }
+
+        function getDayAnnotation(dateStr) {
+            const parsed = parseDateTime(dateStr, "");
+            if (isNaN(parsed.getTime()) || parsed.getFullYear() === 2099) return dateStr;
+            
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            const formatted = parsed.toLocaleDateString('fr-FR', options);
+            return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        }
+
+        // 5. FILTRES DYNAMIQUES
+        function setupCategoryFilters() {
+            const container = document.getElementById('actu-categories');
+            
+            // Conserver le bouton "Toutes" d'origine et nettoyer le reste si besoin
+            const allBtn = container.querySelector('[data-category="all"]');
+            container.innerHTML = '';
+            if (allBtn) container.appendChild(allBtn);
+
+            const categories = new Set();
+            rawActualites.forEach(item => {
+                const cat = item["Catégorie / Type"];
+                if (cat && cat.trim() !== '') {
+                    categories.add(cat.trim());
+                }
+            });
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'actu-filter-btn px-4 py-2 border border-arch-200 bg-white text-arch-700 font-mono-custom text-xs uppercase tracking-wider shrink-0 hover:bg-arch-100 transition-all min-h-[40px]';
+                btn.setAttribute('data-category', cat);
+                btn.textContent = cat;
+                
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.actu-filter-btn').forEach(b => {
+                        b.classList.remove('bg-arch-800', 'text-white', 'border-arch-800');
+                        b.classList.add('bg-white', 'text-arch-700', 'border-arch-200');
+                    });
+                    btn.classList.remove('bg-white', 'text-arch-700', 'border-arch-200');
+                    btn.classList.add('bg-arch-800', 'text-white', 'border-arch-800');
+
+                    activeActuCategory = cat;
+                    renderActualites();
+                });
+
+                container.appendChild(btn);
+            });
+
+            if (allBtn) {
+                allBtn.addEventListener('click', () => {
+                    document.querySelectorAll('.actu-filter-btn').forEach(b => {
+                        b.classList.remove('bg-arch-800', 'text-white', 'border-arch-800');
+                        b.classList.add('bg-white', 'text-arch-700', 'border-arch-200');
+                    });
+                    allBtn.classList.remove('bg-white', 'text-arch-700', 'border-arch-200');
+                    allBtn.classList.add('bg-arch-800', 'text-white', 'border-arch-800');
+
+                    activeActuCategory = 'all';
+                    renderActualites();
+                });
+            }
+        }
+
+        function setupAgendaTypeFilters() {
+            const container = document.getElementById('agenda-types');
+            
+            const allBtn = container.querySelector('[data-type="all"]');
+            container.innerHTML = '';
+            if (allBtn) container.appendChild(allBtn);
+
+            const types = new Set();
+            rawAgenda.forEach(item => {
+                const type = item["Catégorie / Type"];
+                if (type && type.trim() !== '') {
+                    types.add(type.trim());
+                }
+            });
+
+            types.forEach(type => {
+                const btn = document.createElement('button');
+                btn.className = 'agenda-filter-btn px-4 py-2 border border-arch-200 bg-white text-arch-700 font-mono-custom text-xs uppercase tracking-wider shrink-0 hover:bg-arch-100 transition-all min-h-[40px]';
+                btn.setAttribute('data-type', type);
+                btn.textContent = type;
+
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.agenda-filter-btn').forEach(b => {
+                        b.classList.remove('bg-arch-800', 'text-white', 'border-arch-800');
+                        b.classList.add('bg-white', 'text-arch-700', 'border-arch-200');
+                    });
+                    btn.classList.remove('bg-white', 'text-arch-700', 'border-arch-200');
+                    btn.classList.add('bg-arch-800', 'text-white', 'border-arch-800');
+
+                    activeAgendaType = type;
+                    renderAgenda();
+                });
+
+                container.appendChild(btn);
+            });
+
+            if (allBtn) {
+                allBtn.addEventListener('click', () => {
+                    document.querySelectorAll('.agenda-filter-btn').forEach(b => {
+                        b.classList.remove('bg-arch-800', 'text-white', 'border-arch-800');
+                        b.classList.add('bg-white', 'text-arch-700', 'border-arch-200');
+                    });
+                    allBtn.classList.remove('bg-white', 'text-arch-700', 'border-arch-200');
+                    allBtn.classList.add('bg-arch-800', 'text-white', 'border-arch-800');
+
+                    activeAgendaType = 'all';
+                    renderAgenda();
+                });
+            }
+        }
+
+        // 6. RENDU ACTUALITÉS & GALERIE
+        function renderActualites() {
+            const actuContainer = document.getElementById('actualites-container');
+            const galerieContainer = document.getElementById('galerie-container');
+
+            const filtered = rawActualites.filter(item => {
+                const cat = item["Catégorie / Type"] ? item["Catégorie / Type"].trim() : '';
+                const matchesCat = (activeActuCategory === 'all') || (cat.toLowerCase() === activeActuCategory.toLowerCase());
+                
+                const title = item["Titre de l'actualité ou de l'activité"] || '';
+                const content = item["Description / Contenu"] || '';
+                const location = item["Lieu / Salle"] || '';
+                const author = item["NOM.Prénom / Anonyme"] || '';
+
+                const matchesGlobal = globalSearchQuery === '' || 
+                    title.toLowerCase().includes(globalSearchQuery) ||
+                    content.toLowerCase().includes(globalSearchQuery) ||
+                    location.toLowerCase().includes(globalSearchQuery) ||
+                    author.toLowerCase().includes(globalSearchQuery) ||
+                    cat.toLowerCase().includes(globalSearchQuery);
+
+                const matchesSpecific = actuSearchQuery === '' ||
+                    title.toLowerCase().includes(actuSearchQuery) ||
+                    content.toLowerCase().includes(actuSearchQuery) ||
+                    location.toLowerCase().includes(actuSearchQuery) ||
+                    author.toLowerCase().includes(actuSearchQuery) ||
+                    cat.toLowerCase().includes(actuSearchQuery);
+
+                return matchesCat && matchesGlobal && matchesSpecific;
+            });
+
+            if (filtered.length === 0) {
+                actuContainer.innerHTML = `
+                    <div class="col-span-full p-12 text-center bg-white border border-arch-200">
+                        <p class="font-mono-custom text-xs text-arch-600 uppercase">Aucune actualité ne correspond à vos critères.</p>
+                    </div>
+                `;
+            } else {
+                actuContainer.innerHTML = '';
+                filtered.forEach(item => {
+                    const card = document.createElement('article');
+                    card.className = 'bg-white border border-arch-200 flex flex-col justify-between hover:border-arch-800 transition-all p-6 sm:p-7 cursor-pointer group shadow-sm hover:shadow-md';
+
+                    const title = item["Titre de l'actualité ou de l'activité"] || 'Sans Titre';
+                    const category = item["Catégorie / Type"] || 'Actualité';
+                    const dateStr = item["Date"] || '';
+                    const timeStr = item["Heure de début"] || item["Heure"] || '';
+                    const content = item["Description / Contenu"] || '';
+                    const imageUrl = item["URL de l'image"] || '';
+                    const location = item["Lieu / Salle"] || '';
+                    const author = item["NOM.Prénom / Anonyme"] || '';
+
+                    const fullDateStr = [dateStr, timeStr].filter(Boolean).join(' à ');
+                    const hasImage = imageUrl && imageUrl.trim() !== '';
+
+                    card.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between text-xs font-mono-custom text-arch-600 border-b border-arch-100 pb-3">
+                                <span class="bg-arch-100 text-arch-900 px-2.5 py-0.5 uppercase font-semibold text-[10px] tracking-wider">${escapeHtml(category)}</span>
+                                <time class="text-[11px]">${escapeHtml(fullDateStr)}</time>
+                            </div>
+                            
+                            ${hasImage ? `
+                                <div class="overflow-hidden bg-arch-100 border border-arch-200 aspect-video relative">
+                                    <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.parentElement.style.display='none'">
+                                </div>
+                            ` : ''}
+
+                            <h3 class="text-lg font-bold text-arch-950 leading-snug group-hover:text-arch-800 transition-colors">${escapeHtml(title)}</h3>
+                            <p class="text-xs sm:text-sm text-arch-700 leading-relaxed line-clamp-3">${escapeHtml(content)}</p>
+                        </div>
+
+                        <div class="pt-4 mt-4 border-t border-arch-100 flex items-center justify-between text-xs font-mono-custom text-arch-600">
+                            <span class="truncate max-w-[180px]">${escapeHtml(location || author)}</span>
+                            <span class="inline-flex items-center gap-1 font-semibold text-arch-900 group-hover:translate-x-1 transition-transform">
+                                <span>Lire</span>
+                                <i data-feather="arrow-right" class="w-3.5 h-3.5"></i>
+                            </span>
+                        </div>
+                    `;
+
+                    card.addEventListener('click', () => {
+                        openDetailModal({
+                            title,
+                            category,
+                            date: fullDateStr,
+                            description: content,
+                            location,
+                            author,
+                            imageUrl
+                        });
+                    });
+
+                    actuContainer.appendChild(card);
+                });
+            }
+
+            // RENDU GALERIE / PROJETS
+            const galleryItems = rawActualites.filter(item => {
+                const img = item["URL de l'image"];
+                return img && img.trim() !== '';
+            });
+
+            if (galleryItems.length === 0) {
+                if (galerieContainer) {
+                    galerieContainer.innerHTML = `
+                        <div class="col-span-full p-8 text-center border border-arch-800 text-arch-300 font-mono-custom text-xs">
+                            Aucun projet graphique ou visuel pour le moment.
+                        </div>
+                    `;
+                }
+            } else {
+                if (galerieContainer) {
+                    galerieContainer.innerHTML = '';
+                    galleryItems.forEach(item => {
+                        const title = item["Titre de l'actualité ou de l'activité"] || 'Projet';
+                        const category = item["Catégorie / Type"] || 'Travail';
+                        const imageUrl = item["URL de l'image"];
+                        const content = item["Description / Contenu"] || '';
+                        const author = item["NOM.Prénom / Anonyme"] || '';
+                        const location = item["Lieu / Salle"] || '';
+                        const dateStr = [item["Date"], item["Heure de début"] || item["Heure"]].filter(Boolean).join(' à ');
+
+                        const galCard = document.createElement('div');
+                        galCard.className = 'group relative bg-arch-900 border border-arch-800 overflow-hidden cursor-pointer aspect-square flex flex-col justify-end p-6';
+
+                        galCard.innerHTML = `
+                            <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(title)}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-30" loading="lazy">
+                            <div class="relative z-10 space-y-2">
+                                <span class="inline-block px-2 py-0.5 bg-white text-arch-950 font-mono-custom text-[10px] uppercase font-bold tracking-wider">${escapeHtml(category)}</span>
+                                <h4 class="text-white font-bold text-base leading-tight">${escapeHtml(title)}</h4>
+                                ${author ? `<p class="text-xs text-arch-300 font-mono-custom">${escapeHtml(author)}</p>` : ''}
+                                <span class="text-xs font-mono-custom text-arch-300 inline-flex items-center gap-1 pt-1">
+                                    <span>Agrandir le projet</span>
+                                    <i data-feather="maximize-2" class="w-3 h-3"></i>
+                                </span>
+                            </div>
+                        `;
+
+                        galCard.addEventListener('click', () => {
+                            openDetailModal({
+                                title,
+                                category,
+                                date: dateStr,
+                                description: content,
+                                location,
+                                author,
+                                imageUrl
+                            });
+                        });
+
+                        galerieContainer.appendChild(galCard);
+                    });
+                }
+            }
+
+            feather.replace();
+        }
+
+        // 7. RENDU DE L'AGENDA CHRONOLOGIQUE
+        function renderAgenda() {
+            const container = document.getElementById('agenda-container');
+
+            const filtered = rawAgenda.filter(item => {
+                const type = item["Catégorie / Type"] ? item["Catégorie / Type"].trim() : '';
+                const matchesType = (activeAgendaType === 'all') || (type.toLowerCase() === activeAgendaType.toLowerCase());
+
+                const title = item["Titre de l'évènement"] || '';
+                const description = item["Description / Contenu"] || '';
+                const location = item["Lieu / Salle"] || '';
+                const speaker = item["Nom de l'intervenant / Rien"] || '';
+
+                const matchesGlobal = globalSearchQuery === '' || 
+                    title.toLowerCase().includes(globalSearchQuery) ||
+                    description.toLowerCase().includes(globalSearchQuery) ||
+                    location.toLowerCase().includes(globalSearchQuery) ||
+                    speaker.toLowerCase().includes(globalSearchQuery) ||
+                    type.toLowerCase().includes(globalSearchQuery);
+
+                const matchesSpecific = agendaSearchQuery === '' ||
+                    title.toLowerCase().includes(agendaSearchQuery) ||
+                    description.toLowerCase().includes(agendaSearchQuery) ||
+                    location.toLowerCase().includes(agendaSearchQuery) ||
+                    speaker.toLowerCase().includes(agendaSearchQuery) ||
+                    type.toLowerCase().includes(agendaSearchQuery);
+
+                return matchesType && matchesGlobal && matchesSpecific;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="p-12 text-center bg-white border border-arch-200 font-mono-custom text-xs text-arch-600 uppercase">
+                        Aucun événement programmé pour cette recherche.
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '';
+                
+                const groupedByDay = {};
+                filtered.forEach(item => {
+                    const dateRaw = item["Date"] || 'Date à venir';
+                    if (!groupedByDay[dateRaw]) {
+                        groupedByDay[dateRaw] = [];
+                    }
+                    groupedByDay[dateRaw].push(item);
+                });
+
+                Object.keys(groupedByDay).forEach(dateKey => {
+                    const daySection = document.createElement('div');
+                    daySection.className = 'space-y-3';
+
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'flex items-center gap-3 pt-4 pb-2 border-b border-arch-200 font-mono-custom text-xs font-bold uppercase tracking-wider text-arch-700';
+                    dayHeader.innerHTML = `
+                        <span class="w-2 h-2 bg-arch-800"></span>
+                        <span>${escapeHtml(getDayAnnotation(dateKey))}</span>
+                    `;
+                    daySection.appendChild(dayHeader);
+
+                    const eventsList = document.createElement('div');
+                    eventsList.className = 'space-y-3';
+
+                    groupedByDay[dateKey].forEach(item => {
+                        const title = item["Titre de l'évènement"] || 'Événement';
+                        const type = item["Catégorie / Type"] || 'Rendez-vous';
+                        const startHour = item["Heure de début"] || item["Heure"] || '';
+                        const endHour = item["Heure de fin"] || '';
+                        
+                        let formattedTime = startHour;
+                        if (startHour && endHour && endHour.trim() !== '') {
+                            formattedTime = `${startHour}-${endHour}`;
+                        }
+
+                        const location = item["Lieu / Salle"] || 'Lieu non spécifié';
+                        const speaker = item["Nom de l'intervenant / Rien"] || '';
+                        const description = item["Description / Contenu"] || '';
+
+                        const row = document.createElement('div');
+                        row.className = 'p-6 sm:p-7 bg-white border border-arch-200 hover:border-arch-800 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer group shadow-sm';
+
+                        row.innerHTML = `
+                            <div class="space-y-2.5 max-w-2xl">
+                                <div class="flex flex-wrap items-center gap-2 text-xs font-mono-custom">
+                                    <span class="px-2.5 py-0.5 bg-arch-800 text-white text-[10px] uppercase font-bold tracking-wider">
+                                        ${escapeHtml(type)}
+                                    </span>
+                                    <span class="text-arch-700 flex items-center gap-1">
+                                        <i data-feather="map-pin" class="w-3 h-3 text-arch-500"></i>
+                                        ${escapeHtml(location)}
+                                    </span>
+                                    ${speaker ? `
+                                        <span class="text-arch-700 flex items-center gap-1 border-l border-arch-200 pl-2">
+                                            <i data-feather="user" class="w-3 h-3 text-arch-500"></i>
+                                            ${escapeHtml(speaker)}
+                                        </span>
+                                    ` : ''}
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-arch-950 group-hover:text-arch-800 transition-colors">${escapeHtml(title)}</h3>
+                                <p class="text-xs sm:text-sm text-arch-700 leading-relaxed line-clamp-2">${escapeHtml(description)}</p>
+                            </div>
+
+                            <div class="md:text-right shrink-0">
+                                <div class="inline-flex items-center gap-2 px-4 py-3 bg-arch-100 border border-arch-200 font-mono-custom font-semibold text-arch-900 text-xs uppercase tracking-wider group-hover:bg-arch-800 group-hover:text-white transition-colors">
+                                    <i data-feather="clock" class="w-4 h-4 text-arch-600 group-hover:text-white"></i>
+                                    <span>${escapeHtml(formattedTime ? `${formattedTime}` : 'Horaire libre')}</span>
+                                </div>
+                            </div>
+                        `;
+
+                        row.addEventListener('click', () => {
+                            openDetailModal({
+                                title,
+                                category: type,
+                                date: `${dateKey}${formattedTime ? ' à ' + formattedTime : ''}`,
+                                description,
+                                location,
+                                author: speaker
+                            });
+                        });
+
+                        eventsList.appendChild(row);
+                    });
+
+                    daySection.appendChild(eventsList);
+                    container.appendChild(daySection);
+                });
+            }
+
+            feather.replace();
+        }
+
+        // ÉCHAPPEMENT HTML DE SÉCURITÉ CONTRE LES INJECTIONS XSS
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
